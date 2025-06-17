@@ -27,8 +27,8 @@ jobs:
           TF_VAR_github_owner: humix-kubernetes
           TF_VAR_repo_name: ${{ github.event.inputs.repo_name }}
         run: |
-          terraform import github_repository.source_code_repo humix-kubernetes/${{ github.event.inputs.repo_name }}
-          terraform import github_repository.config_repo humix-kubernetes/${{ github.event.inputs.repo_name }}-config
+          terraform import 'github_repository.source_code_repo[0]' humix-kubernetes/${{ github.event.inputs.repo_name }}
+          terraform import 'github_repository.config_repo[0]' humix-kubernetes/${{ github.event.inputs.repo_name }}-config
 
       - name: Deletar repositórios
         run: |
