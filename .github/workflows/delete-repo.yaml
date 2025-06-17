@@ -21,10 +21,13 @@ jobs:
       - name: Inicializar Terraform
         run: terraform init
 
-      - name: Deletar repositórios
+      - name: Importar repositórios
         run: |
             terraform import github_repository.source_code_repo humix-kubernetes/${{ github.event.inputs.repo_name }}
             terraform import github_repository.config_repo humix-kubernetes/${{ github.event.inputs.repo_name }}-config
+    
+      - name: Deletar repositórios
+        run: |
             terraform apply -auto-approve \
                 -var="github_token=${{ secrets.GH_PAT_ADMIN }}" \
                 -var="github_owner=humix-kubernetes" \
