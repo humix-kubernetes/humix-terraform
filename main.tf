@@ -15,8 +15,12 @@ provider "github" {
 resource "github_repository" "source_code_repo" {
   name        = var.repo_name
   count       = var.delete ? 0 : 1
-  description = "Express Node.js template repository"
+  description = "${var.repo_name}"
   visibility  = "private"
+  template {
+    owner      = var.template_owner
+    repository = "humix-srv-template"
+  }
 }
 
 resource "github_repository" "config_repo" {
@@ -24,4 +28,8 @@ resource "github_repository" "config_repo" {
   count       = var.delete ? 0 : 1
   description = "Config repository for ${var.repo_name}"
   visibility  = "private"
+    template {
+    owner      = var.template_owner
+    repository = "humix-srv-template-config"
+  }
 }
