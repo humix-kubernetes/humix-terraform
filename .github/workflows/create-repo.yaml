@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GH_PAT_ADMIN }}
-      GITHUB_OWNER: ${{ github.repository_owner }}
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
@@ -28,5 +27,5 @@ jobs:
         run: |
           terraform apply -auto-approve \
             -var="github_token=${{ secrets.GH_PAT_ADMIN }}" \
-            -var="github_owner=${{ github.repository_owner }}" \
+            -var="github_owner=humix-kubernetes" \
             -var="repo_name=${{ github.event.inputs.repo_name }}"
