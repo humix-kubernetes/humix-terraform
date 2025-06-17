@@ -18,7 +18,7 @@ resource "github_repository" "source_code_repo" {
   description = "${var.repo_name}"
   visibility  = "private"
   template {
-    owner      = var.template_owner
+    owner      = var.github_owner
     repository = "humix-srv-template"
   }
 }
@@ -29,7 +29,7 @@ resource "github_repository" "config_repo" {
   description = "Config repository for ${var.repo_name}"
   visibility  = "private"
     template {
-    owner      = var.template_owner
+    owner      = var.github_owner
     repository = "humix-srv-template-config"
   }
 }
