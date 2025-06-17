@@ -1,0 +1,32 @@
+name: Criar repositório via Terraform
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_name:
+        description: 'Nome do novo repositório'
+        required: true
+        type: string
+
+jobs:
+  create-repo:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_OWNER: ${{ github.repository_owner }}
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Instalar Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Inicializar Terraform
+        run: terraform init
+
+      - name: Aplicar Terraform
+        run: |
+          terraform apply -auto-approve \
+            -var="github_token=${{ secrets.GITHUB_TOKEN }}" \
+            -var="github_owner=${{ github.repository_owner }}" \
+            -var="repo_name=${{ github.event.inputs.repo_name }}"

@@ -1,0 +1,25 @@
+terraform{
+    required_providers {
+        github = {
+            source = "integrations/github"
+            version = "~> 5.0"
+        }
+    }
+}
+
+provider "github" {
+    token = var.github_token
+    owner = var.github_owner
+}
+
+resource "github_repository" "source_code_repo" {
+  name        = var.repo_name
+  description = "Express Node.js template repository"
+  visibility  = "private"
+}
+
+resource "github_repository" "config_repo" {
+  name        = "${var.repo_name}-config"
+  description = "Config repository for ${var.repo_name}"
+  visibility  = "private"
+}
