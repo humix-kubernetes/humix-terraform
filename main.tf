@@ -14,12 +14,14 @@ provider "github" {
 
 resource "github_repository" "source_code_repo" {
   name        = var.repo_name
+  count       = var.delete ? 0 : 1
   description = "Express Node.js template repository"
   visibility  = "private"
 }
 
 resource "github_repository" "config_repo" {
   name        = "${var.repo_name}-config"
+  count       = var.delete ? 0 : 1
   description = "Config repository for ${var.repo_name}"
   visibility  = "private"
 }

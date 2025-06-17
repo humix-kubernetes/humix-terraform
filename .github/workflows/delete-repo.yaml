@@ -1,0 +1,30 @@
+name: Deletar repositório via Terraform
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_name:
+        description: 'Nome do repositório a ser deletado'
+        required: true
+        type: string
+
+jobs:
+  delete-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Instalar Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Inicializar Terraform
+        run: terraform init
+
+      - name: Deletar repositórios
+        run: |
+          terraform apply -auto-approve \
+            -var="github_token=${{ secrets.GH_PAT_ADMIN }}" \
+            -var="github_owner=${{ github.repository_owner }}" \
+            -var="repo_name=${{ github.event.inputs.repo_name }}" \
+            -var="delete=true"

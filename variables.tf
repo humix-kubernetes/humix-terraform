@@ -19,3 +19,9 @@ variable "template_repo" {
   type        = string
   default     = "express-nodejs-template"
 }
+
+variable "delete" {
+  description = "Se true, deleta os repositórios"
+  type        = bool
+  default     = false
+}
